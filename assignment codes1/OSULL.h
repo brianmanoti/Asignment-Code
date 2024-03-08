@@ -1,60 +1,57 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <chrono> // Include for measuring time
 #include "OSULL.h"
 
 using namespace std;
-
-// Function to generate random integer within a given range
-int generateRandomInt(int min, int max) {
-    return min + rand() % (max - min + 1);
-}
-
-// Function to measure the performance of operations on OSULL
-template<int initNodeCapacity>
-void measurePerformance_OSULL(OSULL<int, initNodeCapacity>& osull, int listSize, int numOperations) {
-    clock_t start = clock();
-
-    // Perform a series of operations (insertions, searches, removals)
-    for (int i = 0; i < numOperations; ++i) {
-        // Perform an insertion operation
-        osull.insert(generateRandomInt(1, listSize * 10));
-
-        // Perform a search operation
-        osull.find(generateRandomInt(1, listSize * 10));
-
-        // Perform a removal operation
-        osull.remove(generateRandomInt(1, listSize * 10));
-    }
-
-    clock_t end = clock();
-    double duration = double(end - start) / CLOCKS_PER_SEC;
-
-    cout << "Time taken for " << (numOperations * 3) << " operations on OSULL with list size " << listSize << " and node capacity " << initNodeCapacity << ": " << duration * 1000 << " milliseconds" << endl;
-}
+using namespace std::chrono; // Namespace for chrono library
 
 int main() {
-    const int listSizes[] = {1000, 10000, 100000}; // Varying list sizes
-    const int numOperations = 1000; // Number of operations for each test
-    const int nodeCapacities[] = {5, 10, 20}; // Varying node capacities for OSULL
+    // Create an instance of OSULL with default node capacity
+    OSULL<int> osull;
 
-    // Seed the random number generator
-    srand(time(0));
+    // Insert some elements into the OSULL
+    osull.insert(10);
+    osull.insert(20);
+    osull.insert(30);
+    osull.insert(15);
 
-    for (int size : listSizes) {
-        for (int capacity : nodeCapacities) {
-            // Create an instance of OSULL with current node capacity
-            OSULL<int, capacity> osull; // Use capacity variable instead of fixed value
+    // Measure the time taken for the operations
+    auto start = high_resolution_clock::now();
 
-            // Populate OSULL with random integers
-            for (int i = 1; i <= size; ++i) {
-                osull.insert(i);
-            }
+    // Display the size of the OSULL
+    cout << "Size of OSULL: " << osull.get_size() << endl;
 
-            // Measure performance for OSULL with current list size and node capacity
-            measurePerformance_OSULL(osull, size, numOperations);
-        }
+    // Display the contents of the OSULL
+    cout << "Contents of OSULL: ";
+    osull.display();
+    cout << endl;
+
+    // Search for an element in the OSULL
+    int searchValue = 20;
+    if (osull.find(searchValue)) {
+        cout << "Element " << searchValue << " found in OSULL" << endl;
+    } else {
+        cout << "Element " << searchValue << " not found in OSULL" << endl;
     }
+
+    // Remove an element from the OSULL
+    int removeValue = 15;
+    if (osull.remove(removeValue)) {
+        cout << "Element " << removeValue << " removed from OSULL" << endl;
+    } else {
+        cout << "Element " << removeValue << " not found in OSULL" << endl;
+    }
+
+    // Display the updated size and contents of the OSULL
+    cout << "Updated size of OSULL: " << osull.get_size() << endl;
+    cout << "Updated contents of OSULL: ";
+    osull.display();
+    cout << endl;
+
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+
+    cout << "Time taken: " << duration.count() << " microseconds" << endl;
 
     return 0;
 }
