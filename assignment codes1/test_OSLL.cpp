@@ -1,34 +1,36 @@
 #include <iostream>
-#include "OSLL.h" // Include the header file for OSLL
+#include "OSLL.h"
+
+using namespace std;
 
 int main() {
-    // Test OSLL functionality
+    // Create an instance of OSLL
     OSLL<int> osll;
 
-    std::cout << "Inserting elements into OSLL..." << std::endl;
+    // Test insertions
+    cout << "Testing insertions:" << endl;
     osll.insert(5);
     osll.insert(10);
     osll.insert(3);
     osll.insert(8);
-
-    std::cout << "Displaying OSLL contents: ";
+    osll.insert(7);
+    cout << "OSLL after insertions: ";
     osll.display();
-    std::cout << std::endl;
+    cout << endl;
 
-    std::cout << "Minimum element in OSLL: " << osll.getMin() << std::endl;
-    std::cout << "Maximum element in OSLL: " << osll.getMax() << std::endl;
+    // Test searches
+    cout << "Testing searches:" << endl;
+    cout << "Searching for 3: " << (osll.find(3) ? "Found" : "Not found") << endl;
+    cout << "Searching for 6: " << (osll.find(6) ? "Found" : "Not found") << endl;
 
-    std::cout << "Finding elements in OSLL..." << std::endl;
-    std::cout << "Find 5: " << (osll.find(5) ? "Found" : "Not found") << std::endl;
-    std::cout << "Find 15: " << (osll.find(15) ? "Found" : "Not found") << std::endl;
-
-    std::cout << "Removing elements from OSLL..." << std::endl;
-    std::cout << "Remove 3: " << (osll.remove(3) ? "Removed" : "Not found") << std::endl;
-    std::cout << "Remove 15: " << (osll.remove(15) ? "Removed" : "Not found") << std::endl;
-
-    std::cout << "Displaying OSLL contents after removal: ";
+    // Test removals
+    cout << "Testing removals:" << endl;
+    osll.remove(5);
+    osll.remove(7);
+    cout << "OSLL after removals: ";
     osll.display();
-    std::cout << std::endl;
+    cout << endl;
 
     return 0;
 }
+

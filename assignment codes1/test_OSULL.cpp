@@ -1,34 +1,34 @@
 #include <iostream>
-#include "OSULL.h" // Include the header file for OSULL
+#include "OSULL.h"
+
+using namespace std;
 
 int main() {
-    // Test OSULL functionality
-    OSULL<int, 5> osull; // Using node capacity of 5
+    // Create an instance of OSULL with a node capacity of 5
+    OSULL<int, 5> osull;
 
-    std::cout << "Inserting elements into OSULL..." << std::endl;
-    osull.insert(5);
-    osull.insert(10);
-    osull.insert(3);
-    osull.insert(8);
-
-    std::cout << "Displaying OSULL contents: ";
+    // Test insertions
+    cout << "Testing insertions:" << endl;
+    for (int i = 1; i <= 20; ++i) {
+        osull.insert(i);
+    }
+    cout << "OSULL after insertions: ";
     osull.display();
-    std::cout << std::endl;
+    cout << endl;
 
-    std::cout << "Minimum element in OSULL: " << osull.getMin() << std::endl;
-    std::cout << "Maximum element in OSULL: " << osull.getMax() << std::endl;
+    // Test searches
+    cout << "Testing searches:" << endl;
+    cout << "Searching for 5: " << (osull.find(5) ? "Found" : "Not found") << endl;
+    cout << "Searching for 25: " << (osull.find(25) ? "Found" : "Not found") << endl;
 
-    std::cout << "Finding elements in OSULL..." << std::endl;
-    std::cout << "Find 5: " << (osull.find(5) ? "Found" : "Not found") << std::endl;
-    std::cout << "Find 15: " << (osull.find(15) ? "Found" : "Not found") << std::endl;
-
-    std::cout << "Removing elements from OSULL..." << std::endl;
-    std::cout << "Remove 3: " << (osull.remove(3) ? "Removed" : "Not found") << std::endl;
-    std::cout << "Remove 15: " << (osull.remove(15) ? "Removed" : "Not found") << std::endl;
-
-    std::cout << "Displaying OSULL contents after removal: ";
+    // Test removals
+    cout << "Testing removals:" << endl;
+    for (int i = 1; i <= 10; ++i) {
+        osull.remove(i);
+    }
+    cout << "OSULL after removals: ";
     osull.display();
-    std::cout << std::endl;
+    cout << endl;
 
     return 0;
 }
