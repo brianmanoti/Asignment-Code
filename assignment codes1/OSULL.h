@@ -1,8 +1,7 @@
 #include <iostream>
-#include <cstdlib> // Include the header file for rand()
-#include <ctime>   // Include the header file for time()
-
-#include "OSULL.h" // Include the header file for OSULL
+#include <cstdlib>
+#include <ctime>
+#include "OSULL.h"
 
 using namespace std;
 
