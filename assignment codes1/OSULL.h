@@ -250,6 +250,17 @@ private:
             }
             cout << " >";
         }
+
+        void merge(Node *other)
+        {
+            // merge the contents of other into this node
+            // requires: other->size + this->size <= this->capacity
+            for (int i = 0; i < other->size; i++)
+            {
+                insert(other->data[i]);
+            }
+            other->size = 0;
+        }
     };
 
     int size; // current number of items 
