@@ -1,21 +1,19 @@
 #include <iostream>
-#include <chrono>
+#include <cstdlib> // Include the header file for rand()
+#include <ctime>   // Include the header file for time()
+
 #include "OSLL.h" // Include the header file for OSLL
 
 using namespace std;
-using namespace std::chrono;
 
 // Function to generate random integer within a given range
 int generateRandomInt(int min, int max) {
-    static random_device rd;
-    static mt19937 gen(rd());
-    uniform_int_distribution<int> dist(min, max);
-    return dist(gen);
+    return min + rand() % (max - min + 1);
 }
 
 // Function to measure the performance of operations on OSLL
 void measurePerformance_OSLL(OSLL<int>& osll, int listSize, int numOperations) {
-    auto start = high_resolution_clock::now();
+    clock_t start = clock();
 
     // Perform a series of operations (insertions, searches, removals)
     for (int i = 0; i < numOperations; ++i) {
@@ -29,15 +27,18 @@ void measurePerformance_OSLL(OSLL<int>& osll, int listSize, int numOperations) {
         osll.remove(generateRandomInt(1, listSize * 10));
     }
 
-    auto end = high_resolution_clock::now();
-    auto duration = duration_cast<milliseconds>(end - start);
+    clock_t end = clock();
+    double duration = double(end - start) / CLOCKS_PER_SEC;
 
-    cout << "Time taken for " << (numOperations * 3) << " operations on OSLL with list size " << listSize << ": " << duration.count() << " milliseconds" << endl;
+    cout << "Time taken for " << (numOperations * 3) << " operations on OSLL with list size " << listSize << ": " << duration * 1000 << " milliseconds" << endl;
 }
 
 int main() {
     const int listSizes[] = {1000, 10000, 100000}; // Varying list sizes
     const int numOperations = 1000; // Number of operations for each test
+
+    // Seed the random number generator
+    srand(time(0));
 
     for (int size : listSizes) {
         // Create an instance of OSLL
