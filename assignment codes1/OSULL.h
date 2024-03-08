@@ -45,7 +45,7 @@ int main() {
     for (int size : listSizes) {
         for (int capacity : nodeCapacities) {
             // Create an instance of OSULL with current node capacity
-            OSULL<int, 5> osull;
+            OSULL<int, capacity> osull; // Use capacity variable instead of fixed value
 
             // Populate OSULL with random integers
             for (int i = 1; i <= size; ++i) {
