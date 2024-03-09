@@ -1,60 +1,32 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
-
 #include "OSULL.h"
 
-using namespace std;
-
-// Function to generate random integer within a given range
-int generateRandomInt(int min, int max) {
-    return min + rand() % (max - min + 1);
-}
-
-// Function to measure the performance of operations on OSULL
-template<int initNodeCapacity>
-void measurePerformance_OSULL(OSULL<int, initNodeCapacity>& osull, int listSize, int numOperations) {
-    clock_t start = clock();
-
-    // Perform a series of operations (insertions, searches, removals)
-    for (int i = 0; i < numOperations; ++i) {
-        // Perform an insertion operation
-        osull.insert(generateRandomInt(1, listSize * 10));
-
-        // Perform a search operation
-        osull.find(generateRandomInt(1, listSize * 10));
-
-        // Perform a removal operation
-        osull.remove(generateRandomInt(1, listSize * 10));
-    }
-
-    clock_t end = clock();
-    double duration = double(end - start) / CLOCKS_PER_SEC;
-
-    cout << "Time taken for " << (numOperations * 3) << " operations on OSULL with list size " << listSize << " and node capacity " << initNodeCapacity << ": " << duration * 1000 << " milliseconds" << endl;
-}
-
 int main() {
-    const int listSizes[] = {1000, 10000, 100000}; // Varying list sizes
-    const int numOperations = 1000; // Number of operations for each test
-    const int nodeCapacities[] = {5, 10, 20}; // Varying node capacities for OSULL
+    // Create an instance of OSULL with initial node capacity of 5
+    OSULL<int, 5> osull;
 
-    srand(time(0)); // Seed the random number generator
+    // Insert some elements into the ordered set
+    osull.insert(5);
+    osull.insert(10);
+    osull.insert(3);
+    osull.insert(8);
 
-    for (int size : listSizes) {
-        for (int capacity : nodeCapacities) {
-            // Create an instance of OSULL with current node capacity
-            OSULL<int, capacity> osull; // Use capacity variable instead of fixed value
+    // Display the contents of the ordered set
+    std::cout << "Ordered Set contents: ";
+    osull.display();
+    std::cout << std::endl;
 
-            // Populate OSULL with random integers
-            for (int i = 1; i <= size; ++i) {
-                osull.insert(i);
-            }
+    // Check if certain elements exist in the ordered set
+    std::cout << "Is 5 in the ordered set? " << (osull.find(5) ? "Yes" : "No") << std::endl;
+    std::cout << "Is 7 in the ordered set? " << (osull.find(7) ? "Yes" : "No") << std::endl;
 
-            // Measure performance for OSULL with current list size and node capacity
-            measurePerformance_OSULL(osull, size, numOperations);
-        }
-    }
+    // Remove an element from the ordered set
+    osull.remove(5);
+
+    // Display the updated contents of the ordered set
+    std::cout << "Ordered Set contents after removing 5: ";
+    osull.display();
+    std::cout << std::endl;
 
     return 0;
 }
