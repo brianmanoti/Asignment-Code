@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <random> // Include the <random> header for random_device, mt19937, and uniform_int_distribution
+#include <random>
 
 #include "OSULL.h"
 
@@ -41,13 +41,13 @@ void measurePerformance_OSULL(OSULL<int, initNodeCapacity>& osull, int listSize,
 int main() {
     const int listSizes[] = {1000, 10000, 100000}; // Varying list sizes
     const int numOperations = 1000; // Number of operations for each test
+    const int nodeCapacities[] = {5, 10, 20}; // Varying node capacities for OSULL
 
     srand(time(0)); // Seed the random number generator
 
     for (int size : listSizes) {
-        for (int i = 0; i < 3; ++i) { // Loop index instead of loop variable
+        for (int capacity : nodeCapacities) {
             // Create an instance of OSULL with current node capacity
-            int capacity = i == 0 ? 5 : (i == 1 ? 10 : 20); // Assign capacity based on loop index
             OSULL<int, capacity> osull;
 
             // Populate OSULL with random integers
