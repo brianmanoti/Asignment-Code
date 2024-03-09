@@ -46,9 +46,9 @@ int main() {
     srand(time(0)); // Seed the random number generator
 
     for (int size : listSizes) {
-        for (int capacity : nodeCapacities) {
+        for (int i = 0; i < 3; ++i) { // Loop index instead of loop variable
             // Create an instance of OSULL with current node capacity
-            OSULL<int, capacity> osull; // Use capacity variable instead of fixed value
+            OSULL<int, nodeCapacities[i]> osull; // Use loop index to access node capacities
 
             // Populate OSULL with random integers
             for (int i = 1; i <= size; ++i) {
