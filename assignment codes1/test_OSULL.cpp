@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <random> // Include the <random> header for random_device, mt19937, and uniform_int_distribution
 
 #include "OSULL.h"
 
@@ -8,7 +9,10 @@ using namespace std;
 
 // Function to generate random integer within a given range
 int generateRandomInt(int min, int max) {
-    return min + rand() % (max - min + 1);
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_int_distribution<int> dist(min, max);
+    return dist(gen);
 }
 
 // Function to measure the performance of operations on OSULL
@@ -58,4 +62,3 @@ int main() {
 
     return 0;
 }
-
